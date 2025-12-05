@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Analytics MCP Server Schema",
+  "description": "Schema definitions for analytics integration endpoints",
+  "definitions": {
+    "Metric": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Metric name (e.g., 'translation.speed', 'test.coverage')"
+        },
+        "value": {
+          "type": "number",
+          "description": "Metric value"
+        },
+        "unit": {
+          "type": "string",
+          "description": "Unit of measurement (e.g., 'lines/min', 'percent', 'seconds')"
+        },
+        "tags": {
+          "type": "object",
+          "description": "Key-value tags for filtering and grouping",
+          "additionalProperties": { "type": "string" }
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Additional context about the metric"
+        }
+      },
+      "required": ["name", "value"]
+    },
+    "Dashboard": {
+      "type": "object",
+      "properties": {
+        "projectId": { "type": "string" },
+        "overview": {
+          "type": "object",
+          "properties": {
+            "totalFiles": { "type": "number" },
+            "translatedFiles": { "type": "number" },
+            "testCoverage": { "type": "number" },
+            "averageRiskScore": { "type": "number" }
+          }
+        },
+        "trends": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Trend" }
+        },
+        "alerts": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Alert" }
+        },
+        "generatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Trend": {
+      "type": "object",
+      "properties": {
+        "metric": { "type": "string" },
+        "dataPoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "timestamp": { "type": "string", "format": "date-time" },
+              "value": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "Alert": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "metric": { "type": "string" },
+        "condition": {
+          "type": "string",
+          "enum": ["greater_than", "less_than", "equals"]
+        },
+        "threshold": { "type": "number" },
+        "projectId": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["active", "triggered", "resolved", "disabled"]
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "metric", "condition", "threshold"]
+    }
+  }
+}

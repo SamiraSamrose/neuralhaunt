@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CRM MCP Server Schema",
+  "description": "Schema definitions for CRM integration endpoints",
+  "definitions": {
+    "Requirement": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "acceptanceCriteria": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "stakeholders": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"]
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "description", "priority"]
+    },
+    "TraceabilityLink": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "requirementId": { "type": "string", "format": "uuid" },
+        "moduleId": { "type": "string" },
+        "sourceFile": { "type": "string" },
+        "translatedFile": { "type": "string" },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "reviewStatus": {
+          "type": "string",
+          "enum": ["pending", "approved", "rejected"]
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["requirementId", "moduleId", "sourceFile", "translatedFile"]
+    },
+    "Stakeholder": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string" },
+        "notificationPreferences": {
+          "type": "object",
+          "properties": {
+            "email": { "type": "boolean" },
+            "slack": { "type": "boolean" },
+            "frequency": {
+              "type": "string",
+              "enum": ["realtime", "daily", "weekly"]
+            }
+          }
+        },
+        "addedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email", "role"]
+    },
+    "Notification": {
+      "type": "object",
+      "properties": {
+        "projectId": { "type": "string" },
+        "message": { "type": "string" },
+        "severity": {
+          "type": "string",
+          "enum": ["info", "warning", "error", "critical"]
+        },
+        "recipients": {
+          "type": "array",
+          "items": { "type": "string", "format": "email" }
+        }
+      },
+      "required": ["projectId", "message", "severity", "recipients"]
+    }
+  }
+}
