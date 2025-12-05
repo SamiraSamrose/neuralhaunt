@@ -1,0 +1,60 @@
+{
+  "project": {
+    "name": "NeuralHaunt",
+    "version": "1.0.0",
+    "description": "RAG-based Multi-Agent AI Ghostwriter for Legacy Code Modernization"
+  },
+  "structure": {
+    "vibes": ".kiro/vibes",
+    "hooks": ".kiro/hooks",
+    "specs": ".kiro/specs",
+    "steering": ".kiro/steering",
+    "mcp": ".kiro/mcp",
+    "src": "src",
+    "public": "public"
+  },
+  "agents": {
+    "legacy-parser": {
+      "id": "agent-1",
+      "name": "Legacy Code Parser",
+      "description": "Extracts logic and dependencies from legacy code",
+      "capabilities": ["parsing", "ast-generation", "dependency-analysis"]
+    },
+    "code-translator": {
+      "id": "agent-2",
+      "name": "Code Translator",
+      "description": "Generates modern language equivalent",
+      "capabilities": ["translation", "pattern-matching", "idiom-generation"]
+    },
+    "test-generator": {
+      "id": "agent-3",
+      "name": "Test Generator",
+      "description": "Creates regression and unit tests",
+      "capabilities": ["test-generation", "coverage-analysis", "mocking"]
+    },
+    "risk-evaluator": {
+      "id": "agent-4",
+      "name": "Risk Evaluator",
+      "description": "Scores deprecated patterns and potential bugs",
+      "capabilities": ["risk-scoring", "pattern-detection", "security-analysis"]
+    }
+  },
+  "mcpServers": {
+    "crm": {
+      "enabled": true,
+      "port": 3001,
+      "url": "http://localhost:3001"
+    },
+    "analytics": {
+      "enabled": true,
+      "port": 3002,
+      "url": "http://localhost:3002"
+    }
+  },
+  "rag": {
+    "enabled": true,
+    "vectorDatabase": "pinecone",
+    "embeddingModel": "text-embedding-ada-002",
+    "indexName": "neuralhaunt-code-patterns"
+  }
+}
