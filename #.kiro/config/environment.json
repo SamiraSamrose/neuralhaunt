@@ -1,0 +1,46 @@
+{
+  "development": {
+    "database": {
+      "host": "localhost",
+      "port": 5432,
+      "name": "neuralhaunt_dev",
+      "user": "dev_user",
+      "password": "dev_password"
+    },
+    "redis": {
+      "host": "localhost",
+      "port": 6379
+    },
+    "mcp": {
+      "crm": "http://localhost:3001",
+      "analytics": "http://localhost:3002"
+    },
+    "rag": {
+      "apiKey": "dev-key",
+      "endpoint": "https://api.pinecone.io"
+    },
+    "logLevel": "debug"
+  },
+  "production": {
+    "database": {
+      "host": "prod-db.example.com",
+      "port": 5432,
+      "name": "neuralhaunt_prod",
+      "user": "${DB_USER}",
+      "password": "${DB_PASSWORD}"
+    },
+    "redis": {
+      "host": "prod-redis.example.com",
+      "port": 6379
+    },
+    "mcp": {
+      "crm": "https://crm-mcp.example.com",
+      "analytics": "https://analytics-mcp.example.com"
+    },
+    "rag": {
+      "apiKey": "${RAG_API_KEY}",
+      "endpoint": "https://api.pinecone.io"
+    },
+    "logLevel": "info"
+  }
+}
