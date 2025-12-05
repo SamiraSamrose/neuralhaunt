@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NeuralHaunt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Fira+Code:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(135deg, #1a0933 0%, #2d1347 50%, #1a0933 100%);
+            min-height: 100vh;
+        }
+        
+        .haunt-title {
+            font-family: 'Creepster', cursive;
+            text-shadow: 0 0 20px #a855f7, 0 0 40px #7c3aed;
+        }
+        
+        .ghost-card {
+            background: rgba(30, 13, 67, 0.6);
+            border: 1px solid #8b5cf6;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        .metric-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="text-gray-100">
+    <header class="py-6 px-8 border-b border-purple-700">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl haunt-title text-purple-400">Analytics Dashboard</h1>
+                <p class="text-sm text-purple-300 mt-2">Real-time metrics and insights</p>
+            </div>
+            <a href="index.html" class="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700 transition">
+                Back to Home
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-8 py-8">
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="ghost-card p-6 rounded-lg metric-card">
+                <div class="text-sm text-gray-400 mb-2">Total Files Processed</div>
+                <div class="text-3xl text-purple-400 font-bold">1,247</div>
+                <div class="text-xs text-green-400 mt-2">+12% from last week</div>
+            </div>
+            
+            <div class="ghost-card p-6 rounded-lg metric-card">
+                <div class="text-sm text-gray-400 mb-2">Translation Accuracy</div>
+                <div class="text-3xl text-green-400 font-bold">94.2%</div>
+                <div class="text-xs text-green-400 mt-2">+2.1% improvement</div>
+            </div>
+            
+            <div class="ghost-card p-6 rounded-lg metric-card">
+                <div class="text-sm text-gray-400 mb-2">Test Coverage</div>
+                <div class="text-3xl text-blue-400 font-bold">87%</div>
+                <div class="text-xs text-yellow-400 mt-2">Target: 90%</div>
+            </div>
+            
+            <div class="ghost-card p-6 rounded-lg metric-card">
+                <div class="text-sm text-gray-400 mb-2">Average Risk Score</div>
+                <div class="text-3xl text-yellow-400 font-bold">42</div>
+                <div class="text-xs text-green-400 mt-2">-5 from last week</div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="ghost-card p-6 rounded-lg">
+                <h3 class="text-xl text-purple-300 mb-4">Translation Speed (Lines/Min)</h3>
+                <div class="chart-container">
+                    <canvas id="speedChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="ghost-card p-6 rounded-lg">
+                <h3 class="text-xl text-purple-300 mb-4">Risk Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="riskChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="ghost-card p-6 rounded-lg mb-8">
+            <h3 class="text-xl text-purple-300 mb-4">Language Translation Breakdown</h3>
+            <div class="chart-container">
+                <canvas id="languageChart"></canvas>
+            </div>
+        </section>
+
+        <section class="ghost-card p-6 rounded-lg">
+            <h3 class="text-xl text-purple-300 mb-4">Agent Performance</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="border-b border-purple-700">
+                        <tr>
+                            <th class="text-left p-3 text-purple-200">Agent</th>
+                            <th class="text-left p-3 text-purple-200">Tasks Completed</th>
+                            <th class="text-left p-3 text-purple-200">Success Rate</th>
+                            <th class="text-left p-3 text-purple-200">Avg Response Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-purple-700">
+                            <td class="p-3">Legacy Parser</td>
+                            <td class="p-3 text-gray-400">1,247</td>
+                            <td class="p-3 text-green-400">98.5%</td>
+                            <td class="p-3 text-gray-400">1.2s</td>
+                        </tr>
+                        <tr class="border-b border-purple-700">
+                            <td class="p-3">Code Translator</td>
+                            <td class="p-3 text-gray-400">1,089</td>
+                            <td class="p-3 text-green-400">94.2%</td>
+                            <td class="p-3 text-gray-400">3.5s</td>
+                        </tr>
+                        <tr class="border-b border-purple-700">
+                            <td class="p-3">Test Generator</td>
+                            <td class="p-3 text-gray-400">1,089</td>
+                            <td class="p-3 text-green-400">96.8%</td>
+                            <td class="p-3 text-gray-400">2.1s</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3">Risk Evaluator</td>
+                            <td class="p-3 text-gray-400">1,089</td>
+                            <td class="p-3 text-green-400">99.1%</td>
+                            <td class="p-3 text-gray-400">0.8s</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const speedCtx = document.getElementById('speedChart').getContext('2d');
+        new Chart(speedCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Lines/Min',
+                    data: [7500, 8200, 8500, 8100, 8700, 8500, 8900],
+                    borderColor: '#a855f7',
+                    backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e5e7eb' } }
+                },
+                scales: {
+                    y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(139, 92, 246, 0.1)' } },
+                    x: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(139, 92, 246, 0.1)' } }
+                }
+            }
+        });
+
+        const riskCtx = document.getElementById('riskChart').getContext('2d');
+        new Chart(riskCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Low', 'Medium', 'High', 'Critical'],
+                datasets: [{
+                    data: [650, 300, 120, 19],
+                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#dc2626']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e5e7eb' } }
+                }
+            }
+        });
+
+        const languageCtx = document.getElementById('languageChart').getContext('2d');
+        new Chart(languageCtx, {
+            type: 'bar',
+            data: {
+                labels: ['COBOL → Python', 'Pascal → Python', 'VB6 → TypeScript', 'Fortran → Python'],
+                datasets: [{
+                    label: 'Files Translated',
+                    data: [520, 380, 250, 97],
+                    backgroundColor: '#a855f7'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#e5e7eb' } }
+                },
+                scales: {
+                    y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(139, 92, 246, 0.1)' } },
+                    x: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(139, 92, 246, 0.1)' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
